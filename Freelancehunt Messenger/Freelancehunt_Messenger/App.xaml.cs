@@ -8,7 +8,7 @@ using Newtonsoft.Json; // Android так не сносит эту библиот
 namespace Freelancehunt_Messenger
 {
     public partial class App : Application
-    { 
+    {
         public App()
         {
             InitializeComponent();
