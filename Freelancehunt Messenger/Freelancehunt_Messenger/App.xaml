@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Freelancehunt_Messenger.App">
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <x:String x:Key="EntryColor_BorderBrush">#FFfad391</x:String>
+            <Color x:Key="BackgroundColor_Main">#f6f6f6</Color>
+            <Color x:Key="BackgroundColor_Button">#ffa200</Color>
+            <Color x:Key="BackgroundColor_1">#ffa200</Color>
+            <Color x:Key="BorderColor_Button">#ffa200</Color>
+            <Color x:Key="TransparentColor">Transparent</Color>
+            <Color x:Key="TextColor_1">White</Color>
+            <Color x:Key="TextColor_2">#b0b0b0</Color>
+            <Color x:Key="TextColor_3">#ffa200</Color>
+            <Color x:Key="BackgroundColor_Main2">#fbfbfb</Color>
+            <Color x:Key="BackgroundColor_Menu">#f6f6f6</Color>
+            <Color x:Key="TextColor_4">#8e8e8e</Color>
+            <Color x:Key="TextColor_5">#b9b9b9</Color>
+            <Color x:Key="TextColor_6">#feaf3f</Color>
+            <Color x:Key="TextColor_7">#ffa200</Color>
+            <Color x:Key="TextColor_8">#ffbd6b</Color>
+            <Color x:Key="TextColor_9">#b1b1b1</Color>
+            <Color x:Key="TextColor_10">#ffa200</Color>
+            <Color x:Key="TextColor_11">#c5c5c5</Color>
+            <Color x:Key="TextColor_12">#7eb9d7</Color>
+            <Color x:Key="BackgroundColor_BoxViewLine_1">#fcdda5</Color>
+            <Color x:Key="BackgroundColor_BoxViewLine_2">#ffa200</Color>
+            <Color x:Key="BackgroundColor_BoxViewLine_3">#ffe8bf</Color>
+            <Color x:Key="BackgroundColor_SelectedItemTrue">#fbefdb</Color>
+
+
+            <Color x:Key="BackgroundColor_4">White</Color>
+
+
+        </ResourceDictionary>
+    </Application.Resources>
+
+
+    
+
+</Application>

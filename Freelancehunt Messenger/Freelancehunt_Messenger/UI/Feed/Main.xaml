@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Freelancehunt_Messenger.UI.Feed.Main"
+             xmlns:MyControl="clr-namespace:Freelancehunt_Messenger.Controls;assembly=Freelancehunt_Messenger"
+             BackgroundColor="White"
+             Title="Лента">
+
+
+    <!--Меню в навигации-->
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Refrash" Clicked="ToolbarItem_RefrashClicked">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource"
+                            WinPhone="img/icon/refrash.png"
+                            Android="refrash.png"
+                            iOS="refrash.png"/>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+
+
+    <Grid BackgroundColor="White">
+        <Image Aspect="AspectFill">
+            <Image.Source>
+                <OnPlatform x:TypeArguments="ImageSource" WinPhone="img/pat.jpg" Android="pat.jpg" iOS="pat.jpg"/>
+            </Image.Source>
+        </Image>
+        <StackLayout BackgroundColor="Transparent">
+
+            <!--Желтая полоска вверху-->
+            <BoxView HeightRequest="1" BackgroundColor="{StaticResource BackgroundColor_BoxViewLine_2}" VerticalOptions="Start" />
+
+            <!--Вывод данных-->
+            <ListView x:Name="navigationDrawerList"
+                      HasUnevenRows="True"
+                      CachingStrategy="RecycleElement"
+                      SeparatorVisibility="None"
+                      BackgroundColor="Transparent"
+                      HeightRequest="0"
+                      Margin="0,0,0,10"
+                      ItemTapped="navigationDrawerList_ItemTapped">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout>
+                                <StackLayout Margin="10,7,10,7" BackgroundColor="#f7f7f7" HorizontalOptions="Start">
+                                    <StackLayout.Triggers>
+                                        <DataTrigger TargetType="StackLayout" Binding="{Binding is_new}" Value="True">
+                                            <Setter Property="BackgroundColor" Value="#f8f7cd" />
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="StackLayout" Binding="{Binding IsPhone}" Value="True">
+                                            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                                        </DataTrigger>
+                                    </StackLayout.Triggers>
+
+                                    <!-- Генерация текста -->
+                                    <MyControl:RenderText Margin="7" MessageHtml="{Binding message}" />
+
+
+                                    <!--Данные пользователя-->
+                                    <StackLayout Margin="5,0,5,5">
+                                        <BoxView HeightRequest="1" BackgroundColor="{StaticResource BackgroundColor_BoxViewLine_1}" HorizontalOptions="Fill"/>
+                                        <StackLayout Orientation="Horizontal" BindingContext="{Binding .}">
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="GetUserProfileTapped" />
+                                            </StackLayout.GestureRecognizers>
+
+
+                                            <!--Иконка пользователя-->
+                                            <Image Source="{Binding from.avatar}"
+                                                   HeightRequest="42" MinimumHeightRequest="42"
+                                                   WidthRequest="42" MinimumWidthRequest="42" />
+
+
+                                            <!-- Имя пользователя и время сообщения -->
+                                            <StackLayout Orientation="Vertical" Margin="0,-3,0,0" VerticalOptions="Center" Spacing="3" Padding="3">
+                                                <Label Text="{Binding time, StringFormat='{0:dd.MM.yy в HH:mm}'}"
+                                                       FontSize="14"
+                                                       TextColor="#464646" />
+
+                                                <Label Text="{Binding from.login}"
+                                                       VerticalOptions="Center"
+                                                       FontSize="14"
+                                                       TextColor="#c5c5c5"/>
+                                            </StackLayout>
+
+
+                                        </StackLayout>
+                                    </StackLayout>
+
+
+                                </StackLayout>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+
+        </StackLayout>
+
+
+        <ActivityIndicator x:Name="LoadIndicator" Color="{StaticResource TextColor_3}" IsRunning="True" VerticalOptions="CenterAndExpand"/>
+    </Grid>
+    
+    
+</ContentPage>

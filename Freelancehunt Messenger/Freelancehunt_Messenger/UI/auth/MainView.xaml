@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Freelancehunt_Messenger.UI.auth.MainView"
+             
+             BackgroundColor="{StaticResource BackgroundColor_Main}"
+             xmlns:BaseStyle="clr-namespace:Freelancehunt_Messenger.Styles.based;assembly=Freelancehunt_Messenger"
+             Title="Авторизация">
+
+</ContentPage>

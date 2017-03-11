@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Freelancehunt_Messenger.UI.auth.BaseUI.MainView"
+             BackgroundColor="{StaticResource BackgroundColor_Main}"
+             xmlns:BaseStyle="clr-namespace:Freelancehunt_Messenger.Styles.based;assembly=Freelancehunt_Messenger">
+
+    
+    <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        <StackLayout Margin="20,0,20,0" 
+                     WidthRequest="520"
+                     HorizontalOptions="Center" 
+                     VerticalOptions="Center">
+
+            <!--Текст "Ваши API ключи"-->
+            <Label FontSize="16" 
+                   HorizontalOptions="Center"
+                   TextColor="{StaticResource TextColor_2}"
+                   Text="Ваши API ключи"/>
+
+            <!--Текст "ссылка на API"-->
+            <Label FontSize="16" 
+                   HorizontalOptions="Center"
+                   TextColor="{StaticResource TextColor_2}"
+                   Text="https://freelancehunt.com/my/api"/>
+
+
+            <!--Ловим автофокус на UWP-->
+            <Button HeightRequest="0" 
+                    WidthRequest="0"
+                    BorderColor="Transparent"
+                    BackgroundColor="Transparent"/>
+
+
+            <!--Email, Height/Высота-->
+            <Grid MinimumHeightRequest="32" Margin="0,45,0,0">
+
+                <!--Иконка-->
+                <Image HeightRequest="24"
+                       MinimumHeightRequest="10"
+                       WidthRequest="24"
+                       MinimumWidthRequest="10"
+                       HorizontalOptions="Start"
+                       VerticalOptions="Center">
+
+                    <Image.Source>
+                        <OnPlatform x:TypeArguments="ImageSource"
+                                    Android="auth_apiToken.png"
+                                    iOS="auth_apiToken.png"
+                                    WinPhone="img/auth/apiToken.png"/>
+                    </Image.Source>
+
+                    <Image.Margin>
+                        <OnPlatform x:TypeArguments="Thickness"
+                                    Android="6,0,0,12"
+                                    iOS="6,0,0,0"
+                                    WinPhone="1,0,0,4"/>
+                    </Image.Margin>
+
+                </Image>
+
+
+                <!--Entry / Идентификатор-->
+                <BaseStyle:Entry x:Name="EntryToken" 
+                                 FontSize="18"
+                                 Placeholder="Идентификатор" 
+                                 HorizontalOptions="FillAndExpand" />
+
+            </Grid>
+
+
+            <!--Пароль, Height/Высота-->
+            <Grid MinimumHeightRequest="32" Margin="0,10,0,0">
+
+                <!--Иконка-->
+                <Image HeightRequest="24"
+                       MinimumHeightRequest="10"
+                       WidthRequest="24"
+                       MinimumWidthRequest="10"
+                       HorizontalOptions="Start"
+                       VerticalOptions="Center">
+
+                    <Image.Source>
+                        <OnPlatform x:TypeArguments="ImageSource"
+                                    Android="auth_apiSecret.png"
+                                    iOS="auth_apiSecret.png"
+                                    WinPhone="img/auth/apiSecret.png"/>
+                    </Image.Source>
+
+                    <Image.Margin>
+                        <OnPlatform x:TypeArguments="Thickness"
+                                    Android="6,0,0,12"
+                                    iOS="6,0,0,0"
+                                    WinPhone="1,0,0,4"/>
+                    </Image.Margin>
+
+                </Image>
+
+                <!--Entry-->
+                <BaseStyle:Entry x:Name="EntrySecret" 
+                                 FontSize="18"
+                                 Placeholder="Секретный ключ" 
+                                 IsPassword="True"
+                                 HorizontalOptions="FillAndExpand" />
+
+            </Grid>
+
+
+            <!--Кнопка регистрации-->
+            <BaseStyle:Button x:Name="ButtonAuth" Text="ВОЙТИ" Clicked="Button_AuthClicked" Margin="0,20,0,0" />
+
+
+            <!--Для маркета UWP-->
+            <Label Text="Политика конфиденциальности" FontSize="12" Margin="0,5,0,0" HorizontalOptions="Center" TextColor="#6ea6eb">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                </Label.GestureRecognizers>
+            </Label>
+
+        </StackLayout>
+    </Grid>
+    
+    
+</ContentView>

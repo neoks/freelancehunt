@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Freelancehunt_Messenger.UI.main.phone"
+             Title="Сообщения">
+
+
+    <!--Меню в навигации-->
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Refrash" Clicked="ToolbarItem_RefrashClicked" Order="Primary">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource"
+                            WinPhone="img/icon/refrash.png"
+                            Android="refrash.png"
+                            iOS="refrash.png"/>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+
+
+    <Grid BackgroundColor="White">
+        <StackLayout BackgroundColor="Transparent" Padding="0" Spacing="0">
+
+            <!--Линия и текст загрузки-->
+            <BoxView HeightRequest="1" BackgroundColor="{StaticResource BackgroundColor_BoxViewLine_2}"/>
+
+            <ListView x:Name="navigationDrawerList"
+                      HasUnevenRows="True"
+                      CachingStrategy="RecycleElement"
+                      SeparatorVisibility="None"
+                      BackgroundColor="Transparent"
+                      ItemTapped="navigationDrawerList_ItemTapped"
+                      ItemAppearing="navigationDrawerList_ItemAppearing">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout BackgroundColor="{Binding BackgroundColor}">
+                                <StackLayout Margin="15,10,15,10">
+
+
+                                    <!--Титл-->
+                                    <Label LineBreakMode="WordWrap"
+                                           FontSize="17"
+                                           Text="{Binding subject}"
+                                           TextColor="#3c4957">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding IsUnread}" Value="True">
+                                                <Setter Property="TextColor" Value="{StaticResource TextColor_12}" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+
+
+                                    <StackLayout Margin="0,5,0,0" Orientation="Horizontal">
+
+                                        <!--Аватар-->
+                                        <Image HeightRequest="50"
+                                               MinimumHeightRequest="50"
+                                               Source="{Binding from.avatar}"
+                                               WidthRequest="50"
+                                               MinimumWidthRequest="50"
+                                               VerticalOptions="Center"/>
+
+
+                                        <!--Логин-->
+                                        <StackLayout VerticalOptions="Center">
+
+                                            <Label Text="{Binding from.FullName}"
+                                                   FontSize="14"
+                                                   LineBreakMode="TailTruncation"
+                                                   TextColor="{StaticResource TextColor_8}"/>
+
+                                            <Label Text="{Binding from.login}"
+                                                   FontSize="13"
+                                                   TextColor="{StaticResource TextColor_9}"/>
+
+                                        </StackLayout>
+
+
+                                        <!--количиство смс-->
+                                        <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                                            <Label Text="{Binding message_count}" 
+                                                   TextColor="{StaticResource TextColor_3}" 
+                                                   VerticalOptions="Center"
+                                                   FontSize="14"
+                                                   MinimumWidthRequest="30"
+                                                   Margin="6,-2,4,0">
+                                                <Label.Triggers>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding IsUnread}" Value="True">
+                                                        <Setter Property="FontSize" Value="18" />
+                                                        <Setter Property="TextColor" Value="{StaticResource TextColor_12}" />
+                                                    </DataTrigger>
+                                                </Label.Triggers>
+                                            </Label>
+
+                                            <StackLayout Margin="7,0,0,0" MinimumWidthRequest="50">
+                                                <Label Text="{Binding last_post_time, StringFormat='{0:dd.MM.yy}'}" 
+                                                       HorizontalOptions="Center"
+                                                       FontSize="13"
+                                                       TextColor="{StaticResource TextColor_11}" />
+                                                <Label Text="{Binding last_post_time, StringFormat='{0:HH:mm}'}" 
+                                                       HorizontalOptions="Center"
+                                                       FontSize="13"
+                                                       TextColor="{StaticResource TextColor_11}" />
+                                            </StackLayout>
+                                        </StackLayout>
+
+                                    </StackLayout>
+
+
+                                </StackLayout>
+
+                                <BoxView HorizontalOptions="FillAndExpand"
+                                         VerticalOptions="End"
+                                         HeightRequest="1"
+                                         BackgroundColor="{StaticResource BackgroundColor_BoxViewLine_3}"/>
+
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+
+        <ActivityIndicator x:Name="LoadIndicator" Color="{StaticResource TextColor_3}" IsRunning="True" VerticalOptions="CenterAndExpand"/>
+    </Grid>
+    
+    
+    
+</ContentPage>

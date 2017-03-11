@@ -1,0 +1,205 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Freelancehunt_Messenger.UI.Message.BaseUI.Main"
+             xmlns:MyControl="clr-namespace:Freelancehunt_Messenger.Controls;assembly=Freelancehunt_Messenger"
+             xmlns:BaseStyle="clr-namespace:Freelancehunt_Messenger.Styles.based;assembly=Freelancehunt_Messenger">
+
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <x:String x:Key="TextButtonToMoreMSG">Показать еще</x:String>
+            <x:Double x:Key="HeightButtonToMoreMSG">35</x:Double>
+            <x:Boolean x:Key="IsViewButtonToMoreMSG">True</x:Boolean>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+
+    <Grid BackgroundColor="White">
+        <Label x:Name="WidthText" FontSize="16" VerticalOptions="Start"  Margin="0,0,95,0"/>
+        <Image Aspect="AspectFill">
+            <Image.Source>
+                <OnPlatform x:TypeArguments="ImageSource" WinPhone="img/pat.jpg" Android="pat.jpg" iOS="pat.jpg"/>
+            </Image.Source>
+        </Image>
+
+        <StackLayout BackgroundColor="Transparent" Spacing="0" Padding="0">
+            
+            <!--Вывод данных-->
+            <ListView x:Name="navigationDrawerList"
+                      HasUnevenRows="True"
+                      SeparatorVisibility="None"
+                      BackgroundColor="Transparent"
+                      HeightRequest="0"
+                      ItemTapped="navigationDrawerList_ItemTapped">
+                
+                <!--Кнопка "Загрузить еще"-->
+                <ListView.Header>
+                    <Button x:Name="szdf" Text="{DynamicResource TextButtonToMoreMSG}"
+                            HeightRequest="{DynamicResource HeightButtonToMoreMSG}" 
+                            MinimumHeightRequest="{DynamicResource HeightButtonToMoreMSG}"
+                            IsVisible="{DynamicResource IsViewButtonToMoreMSG}"
+                            BackgroundColor="#6ea6eb"
+                            BorderRadius="7"
+                            FontSize="14"
+                            TextColor="White"
+                            BorderWidth="0"
+                            Margin="0,5,0,5"
+                            HorizontalOptions="CenterAndExpand"
+                            Clicked="MoreMSG_Clicked"/>
+                </ListView.Header>
+                
+                <!--Шаблон смс-->
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.ContextActions>
+                                <MenuItem Text="Копировать сообщение" Clicked="MenuItem_ClipboardClicked" BindingContext="{Binding message_html}"/>
+                            </ViewCell.ContextActions>
+                            <StackLayout>
+                                <StackLayout Margin="10,10,30,10" BackgroundColor="#f7f7f7" HorizontalOptions="Start">
+                                    <StackLayout.Triggers>
+                                        <DataTrigger TargetType="StackLayout" Binding="{Binding IsPhoneAndIsMe}" Value="True">
+                                            <Setter Property="HorizontalOptions" Value="End" />
+                                            <Setter Property="Margin" Value="30,10,10,10" />
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="StackLayout" Binding="{Binding IsMe}" Value="True">
+                                            <Setter Property="BackgroundColor" Value="#f8f7cd" />
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="StackLayout" Binding="{Binding IsFreelancehunt}" Value="True">
+                                            <Setter Property="BackgroundColor" Value="#cfebbd" />
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="StackLayout" Binding="{Binding from.login}" Value="BotError">
+                                            <Setter Property="BackgroundColor" Value="#ffd0ca" />
+                                        </DataTrigger>
+                                    </StackLayout.Triggers>
+
+
+                                    <!--Контент-->
+                                    <StackLayout Margin="10" BackgroundColor="Transparent">
+                                        
+
+                                        <!-- Имя пользователя и время сообщения -->
+                                        <StackLayout Orientation="Horizontal">
+                                            
+                                            <Label Text="{Binding FullName}"
+                                                   FontSize="14"
+                                                   BindingContext="{Binding .}"
+                                                   TextColor="{StaticResource TextColor_8}">
+                                                <Label.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="GetUserProfileTapped" />
+                                                </Label.GestureRecognizers>
+                                                <Label.Triggers>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding IsFreelancehunt}" Value="True">
+                                                        <Setter Property="TextColor" Value="#557439" />
+                                                    </DataTrigger>
+                                                </Label.Triggers>
+                                            </Label>
+
+                                            <Label Text="{Binding post_time, StringFormat='{0:dd.MM в HH:mm}'}"
+                                                   VerticalOptions="Center"
+                                                   FontSize="12"
+                                                   Margin="15,0,0,0"
+                                                   HorizontalOptions="EndAndExpand"
+                                                   TextColor="#a7a7a7" />
+                                        </StackLayout>
+                                        
+
+                                        <!-- Генерация текста -->
+                                        <MyControl:RenderText MessageHtml="{Binding message_html}" />
+                                        
+
+                                    </StackLayout>
+                                    
+                                    
+                                    <!--Атачман-->
+                                    <StackLayout Margin="5,0,5,5" IsVisible="{Binding IsAttachmentsNotNull}">
+                                        <BoxView HeightRequest="1" BackgroundColor="{StaticResource BackgroundColor_BoxViewLine_1}" HorizontalOptions="Fill"/>
+                                        <MyControl:RenderAttachments Attachments="{Binding attachments}" />
+                                    </StackLayout>
+
+
+                                </StackLayout>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+
+            <!--Низ приложения-->
+            <StackLayout Spacing="0" Padding="0" BackgroundColor="White">
+                
+                <!--Разделитель-->
+                <BoxView HeightRequest="1" 
+                         BackgroundColor="#edeff2"
+                         HorizontalOptions="Fill"/>
+
+
+                <!--Отправка сообщения-->
+                <StackLayout x:Name="StackLayoutSendMsg" Orientation="Horizontal" Margin="5" BackgroundColor="Transparent">
+
+                    <!--Инпут и Please Holder-->
+                    <Grid HorizontalOptions="FillAndExpand" BackgroundColor="White">
+                        <Label x:Name="PleaseHolderEditor" Text="Начните набирать текст..."
+                               HorizontalOptions="Center" 
+                               VerticalOptions="Center"
+                               FontSize="16"
+                               TextColor="#c0c1c1"/>
+
+                        <!--Ловим автофокус-->
+                        <Button HeightRequest="0" MinimumHeightRequest="0" WidthRequest="0" MinimumWidthRequest="0" HorizontalOptions="Start" VerticalOptions="Start"/>
+                        
+                        <BaseStyle:Editor x:Name="EditorMsg"
+                                          HorizontalOptions="Fill"
+                                          FontSize="16"
+                                          BackgroundColor="Transparent"
+                                          TextChanged="EditorMsg_TextChanged"/>
+                    </Grid>
+
+
+                    <!--Разделитель боковой-->
+                    <BoxView WidthRequest="1"
+                             BackgroundColor="#edeff2"
+                             VerticalOptions="Fill"/>
+
+
+                    <!--Кнопка отправки текста-->
+                    <StackLayout BackgroundColor="Transparent"
+                                 HorizontalOptions="End">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnSendTapped" />
+                        </StackLayout.GestureRecognizers>
+
+                        <Label Text="Send"
+                               FontSize="18"
+                               Margin="3,0,3,0"
+                               VerticalOptions="CenterAndExpand" 
+                               HorizontalOptions="CenterAndExpand" 
+                               TextColor="{StaticResource TextColor_3}"/>
+                    </StackLayout>
+
+                </StackLayout>
+            </StackLayout>
+
+
+        </StackLayout>
+
+        
+        <!--Желтая полоска вверху-->
+        <BoxView HeightRequest="1" 
+                 IsVisible="False"
+                 BackgroundColor="{StaticResource BackgroundColor_BoxViewLine_2}" 
+                 VerticalOptions="Start">
+            <BoxView.IsVisible>
+                <OnPlatform x:TypeArguments="x:Boolean" WinPhone="True" Android="True"/>
+            </BoxView.IsVisible>
+        </BoxView>
+
+
+        <ActivityIndicator x:Name="LoadIndicator" Color="{StaticResource TextColor_3}" IsRunning="True" VerticalOptions="CenterAndExpand"/>
+    </Grid>
+
+
+
+</ContentView>
