@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
 using Xamarin.Forms;
 
 namespace Freelancehunt_Messenger.sdk.Models.Threads
@@ -20,6 +22,15 @@ namespace Freelancehunt_Messenger.sdk.Models.Threads
         public string file_type { get; set; }
         public string url { get; set; }
         public string url_thumbnail { get; set; }
+
+        public string FileName
+        {
+            get
+            {
+                string fileName = Path.GetFileName(WebUtility.UrlDecode(url));
+                return fileName.Length > 25 ? fileName.Remove(0, fileName.Length - 25) : fileName;
+            }
+        }
     }
 
     public class MessageThread

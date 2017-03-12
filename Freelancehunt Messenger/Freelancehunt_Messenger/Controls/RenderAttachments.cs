@@ -71,7 +71,7 @@ namespace Freelancehunt_Messenger.Controls
                     Children = {
                         new Label()
                         {
-                            Text = Path.GetFileName(attach.url),
+                            Text = attach.FileName,
                             LineBreakMode = LineBreakMode.TailTruncation,
                             TextColor = Color.FromHex("#464646"),
                             FontSize = 13,
