@@ -153,6 +153,7 @@
                         <BaseStyle:Editor x:Name="EditorMsg"
                                           HorizontalOptions="Fill"
                                           FontSize="16"
+                                          ctrlEnter="EditorMsg_ctrlEnter"
                                           BackgroundColor="Transparent"
                                           TextChanged="EditorMsg_TextChanged"/>
                     </Grid>

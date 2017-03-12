@@ -70,6 +70,15 @@ namespace Freelancehunt_Messenger.UI.Message.BaseUI
 
 
         /// <summary>
+        /// Отправка сообщения через "ctrl + enter" в UWP
+        /// </summary>
+        private void EditorMsg_ctrlEnter()
+        {
+            OnSendTapped(null, null);
+        }
+
+
+        /// <summary>
         /// Отправка сообщения
         /// </summary>
         async void OnSendTapped(object sender, EventArgs e)
