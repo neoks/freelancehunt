@@ -9,4 +9,10 @@
 &nbsp; &nbsp; III. Публикация нового сообщения в переписке
 
 <hr>
-<b>Автор</b>: https://freelancehunt.com/freelancer/neoks.html
+<b>Вопросы по исходникам, пишите мне</b>: https://freelancehunt.com/freelancer/neoks.html
+
+<br /><hr>
+<b>Среда разработки</b>: Visual Studio 2015 update 3<br />
+<b>Фреймворк</b>: Xamarin 4.* <br />
+<b>Код</b>: C# 6.0 / .NET 4.5<br />
+<b>Документация</b>: https://github.com/neoks/freelancehunt/wiki
