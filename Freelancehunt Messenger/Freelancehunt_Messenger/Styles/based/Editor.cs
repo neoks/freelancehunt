@@ -6,7 +6,6 @@ namespace Freelancehunt_Messenger.Styles.based
     {
         public Editor()
         {
-
         }
 
         #region ctrl + enter

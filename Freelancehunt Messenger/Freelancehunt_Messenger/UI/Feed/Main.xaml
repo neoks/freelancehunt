@@ -34,7 +34,6 @@
             <!--Вывод данных-->
             <ListView x:Name="navigationDrawerList"
                       HasUnevenRows="True"
-                      CachingStrategy="RecycleElement"
                       SeparatorVisibility="None"
                       BackgroundColor="Transparent"
                       HeightRequest="0"

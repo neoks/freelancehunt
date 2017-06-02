@@ -39,11 +39,13 @@ namespace Freelancehunt_Messenger.Controls
             Color textColor = Color.FromHex("#464646");
 
             #region Начальный текст - (вырезаем весь код форматирования текста и заменяем часть кода на свой)
-            string message_html = Regex.Replace(MessageHtml, "(<br />|<a [^>]+>([^<]+|<[^<]+>|<[a-z] +[^<]+</[a-z]>)</a>|<img [^>]+>|<[^>]+>|\\&lt;|\\&gt;)", rg =>
+            string message_html = Regex.Replace(MessageHtml, "(<br />|<a [^>]+>([^<]+|<[^<]+>|<[a-z] +[^<]+</[a-z]>)</a>|<img [^>]+>|<[^>]+>|\\&lt;|\\&gt;|\\&nbsp;|\\&quot;)", rg =>
             {
                 // Форматирование
                 switch (rg.Groups[0].Value)
                 {
+                    case "&quot;": return "\"";
+
                     case "&lt;": return "<";
                     case "&gt;": return ">";
 
@@ -65,6 +67,12 @@ namespace Freelancehunt_Messenger.Controls
                 if (Regex.IsMatch(rg.Groups[0].Value, "</h[0-9]+>"))
                     return "<br />";
 
+                // Изображение
+                if (rg.Groups[0].Value.Contains("src="))
+                {
+                    return $"{SplitBbCode}img:{new Regex("src=\"([^\"]+)\"").Match(rg.Groups[0].Value).Groups[1].Value}{SplitBbCode}";
+                }
+
                 // Ссылка
                 if (rg.Groups[0].Value.Contains("href="))
                 {
@@ -74,12 +82,6 @@ namespace Freelancehunt_Messenger.Controls
                     title = Regex.Replace(title, "<i +class=\"fa +fa-([^\"]+)\"></i>", "$1");
                     title = Regex.Replace(title, "<img +src=\"/static/images/fugu/balloon(-|_)([a-z]+)\\..*", "$2");
                     return $"{SplitBbCode}link:{gLink[1].Value},{title}{SplitBbCode}";
-                }
-
-                // Изображение
-                if (rg.Groups[0].Value.Contains("src="))
-                {
-                    return $"{SplitBbCode}img:{new Regex("src=\"([^\"]+)\"").Match(rg.Groups[0].Value).Groups[1].Value}{SplitBbCode}";
                 }
 
                 // Удаляем
@@ -165,17 +167,17 @@ namespace Freelancehunt_Messenger.Controls
                                 }
                             case "link":
                                 {
+                                    string url = grp[2].Value.Split(',')[0];
+                                    if (!Regex.IsMatch(url, "^https?://"))
+                                        url = "https://freelancehunt.com/" + Regex.Replace(url, "^/", "");
+
                                     TapGestureRecognizer tap = new TapGestureRecognizer();
                                     tap.Tapped += (s, et) =>
                                     {
-                                        string url = grp[2].Value.Split(',')[0];
-                                        if (!Regex.IsMatch(url, "^https?://"))
-                                            url = "https://freelancehunt.com/" + Regex.Replace(url, "^/", "");
-
                                         Device.OpenUri(new Uri(url));
                                     };
 
-                                    FormatLabelTextToWrapLayout(wrapLayout, (grp[1].Value == "img" ? "изображение" : grp[2].Value.Split(',')[1]), Color.FromHex("#6ea6eb"), lineBreakMode: LineBreakMode.TailTruncation, tap: tap);
+                                    FormatLabelTextToWrapLayout(wrapLayout, (grp[1].Value == "img" ? "img" : grp[2].Value.Split(',')[1]), Color.FromHex("#6ea6eb"), lineBreakMode: LineBreakMode.TailTruncation, tap: tap, urlImg: url);
                                     break;
                                 }
                         }
@@ -196,26 +198,41 @@ namespace Freelancehunt_Messenger.Controls
 
 
 
-        void FormatLabelTextToWrapLayout(WrapLayout wrapLayout, string text, Color color, FontAttributes fontAttributes = FontAttributes.None, LineBreakMode lineBreakMode = LineBreakMode.NoWrap, TapGestureRecognizer tap = null)
+        void FormatLabelTextToWrapLayout(WrapLayout wrapLayout, string text, Color color, FontAttributes fontAttributes = FontAttributes.None, LineBreakMode lineBreakMode = LineBreakMode.NoWrap, TapGestureRecognizer tap = null, string urlImg = null)
         {
             foreach (var line in text.Trim().Split(' '))
             {
                 if (string.IsNullOrWhiteSpace(line))
                     continue;
 
-                Label lb = new Label()
+                if (text == "img")
                 {
-                    FontAttributes = fontAttributes,
-                    LineBreakMode = lineBreakMode,
-                    FontSize = PlatformInvoke.IsWindows ? 15 : 16,
-                    TextColor = color,
-                    Text = line
-                };
+                    Image img = new Image();
+                    img.Source = urlImg;
 
-                if (tap != null)
-                    lb.GestureRecognizers.Add(tap);
+                    if (tap != null)
+                        img.GestureRecognizers.Add(tap);
 
-                wrapLayout.Children.Add(lb);
+                    wrapLayout.Orientation = StackOrientation.Vertical;
+                    wrapLayout.Children.Add(img);
+                }
+
+                else
+                {
+                    Label lb = new Label()
+                    {
+                        FontAttributes = fontAttributes,
+                        LineBreakMode = lineBreakMode,
+                        FontSize = PlatformInvoke.IsWindows ? 15 : 16,
+                        TextColor = color,
+                        Text = line
+                    };
+
+                    if (tap != null)
+                        lb.GestureRecognizers.Add(tap);
+
+                    wrapLayout.Children.Add(lb);
+                }
             }
         }
     }

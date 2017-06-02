@@ -1,4 +1,5 @@
-﻿using Freelancehunt_Messenger.Models.IBased;
+﻿using Freelancehunt_Messenger.Models.based;
+using Freelancehunt_Messenger.Models.IBased;
 using Freelancehunt_Messenger.Models.main;
 using Freelancehunt_Messenger.sdk;
 using System;
@@ -10,6 +11,7 @@ namespace Freelancehunt_Messenger.UI.main
 {
     public partial class MasterPage : MasterDetailPage
     {
+        IProperties Properties;
         phone ph = new phone();
         static MasterPage main;
 
@@ -19,6 +21,7 @@ namespace Freelancehunt_Messenger.UI.main
         {
             InitializeComponent();
             main = this;
+            Properties = DependencyService.Get<IProperties>();
 
             //if (Device.OS == TargetPlatform.Windows && Device.Idiom == TargetIdiom.Desktop)
             //    Lb_Copyrate.IsVisible = false;
@@ -65,6 +68,7 @@ namespace Freelancehunt_Messenger.UI.main
         private void OnTappedExit()
         {
             // Завершаем программу
+            Properties.Write(KeyProperties.AutoAuth, "false");
             ICloseApplication app = DependencyService.Get<ICloseApplication>();
             app.Exit();
         }

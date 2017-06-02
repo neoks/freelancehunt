@@ -16,7 +16,7 @@
 
 
     <Grid BackgroundColor="White">
-        <Label x:Name="WidthText" FontSize="16" VerticalOptions="Start"  Margin="0,0,95,0"/>
+        <Label x:Name="WidthText" FontSize="16" VerticalOptions="Start"  Margin="0,0,93,0"/>
         <Image Aspect="AspectFill">
             <Image.Source>
                 <OnPlatform x:TypeArguments="ImageSource" WinPhone="img/pat.jpg" Android="pat.jpg" iOS="pat.jpg"/>
@@ -153,8 +153,8 @@
                         <BaseStyle:Editor x:Name="EditorMsg"
                                           HorizontalOptions="Fill"
                                           FontSize="16"
-                                          ctrlEnter="EditorMsg_ctrlEnter"
                                           BackgroundColor="Transparent"
+                                          ctrlEnter="EditorMsg_ctrlEnter"
                                           TextChanged="EditorMsg_TextChanged"/>
                     </Grid>
 

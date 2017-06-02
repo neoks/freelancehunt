@@ -5,6 +5,7 @@
         NotKey = 0,
         apiToken,
         apiSecret,
-        Settings
+        Settings,
+        AutoAuth
     }
 }

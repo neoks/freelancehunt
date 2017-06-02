@@ -26,17 +26,9 @@ namespace Freelancehunt_Messenger.sdk.Models.Threads
             }
         }
 
-        public string url { get; set; }
-
-        public string url_api { get; set; }
-
         public From from { get; set; }
 
-        public string has_attach { get; set; }
-
         public short message_count { get; set; }
-
-        public DateTime first_post_time { get; set; }
 
         public DateTime last_post_time { get; set; }
 

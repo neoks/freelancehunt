@@ -33,11 +33,13 @@ namespace Freelancehunt_Messenger.UI.Message.BaseUI
             if (text == null)
                 return;
 
-            text = Regex.Replace(text, "(<br />|<[^<]+>|<img [^>]+>|<[^>]+>|\\&lt;|\\&gt;)", rg =>
+            text = Regex.Replace(text, "(<br />|<[^<]+>|<img [^>]+>|<[^>]+>|\\&lt;|\\&gt;|\\&nbsp;|\\&quot;)", rg =>
             {
                 // Форматирование
                 switch (rg.Groups[0].Value)
                 {
+                    case "&quot;": return "\"";
+
                     case "&lt;": return "<";
                     case "&gt;": return ">";
 

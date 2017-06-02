@@ -10,11 +10,7 @@
 
         public string sname { get; set; }
 
-        public string url { get; set; }
-
         public string avatar { get; set; }
-
-        public string avatar_md { get; set; }
 
         public string FullName
         {

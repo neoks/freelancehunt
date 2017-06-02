@@ -20,6 +20,9 @@ namespace Freelancehunt_Messenger.UI.auth.BaseUI
             Properties = DependencyService.Get<IProperties>();
             EntryToken.Text = Properties.Read(KeyProperties.apiToken);
             EntrySecret.Text = Properties.Read(KeyProperties.apiSecret);
+
+            if (Properties.Read(KeyProperties.AutoAuth) == "true")
+                Button_AuthClicked(null, null);
         }
 
         async void Button_AuthClicked(object sender, EventArgs e)
@@ -39,8 +42,9 @@ namespace Freelancehunt_Messenger.UI.auth.BaseUI
                 var Profiles = new SDK.Profiles();
                 sdk.Models.Profiles.ME me = await Profiles.me;
                 PlatformInvoke.profile_id = me.profile_id;
-                
+
                 // Если все ок
+                Properties.Write(KeyProperties.AutoAuth, "true");
                 Application.Current.MainPage = new UI.main.MasterPage(me);
             }
             catch (Exception ex)
